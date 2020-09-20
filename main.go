@@ -1,14 +1,17 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+    "fmt"
+    "inhand/clawer"
+    "inhand/parser"
+)
 
 func main() {
-    r := gin.Default()
-    r.GET("/ping", func(c *gin.Context) {
-        c.JSON(200, gin.H{
-            "message": "pong",
-        })
-    })
-    r.Run(":8900") // listen and serve on 0.0.0.0:8080
+    
+    uri := "http://www.cnblogs.com/"
+    res := clawer.Claw(uri)
+    newUris := parser.Parse(res.Body)
+    fmt.Println(res.Body)
+    fmt.Println(newUris)
 }
 
