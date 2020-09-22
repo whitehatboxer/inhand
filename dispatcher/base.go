@@ -86,6 +86,9 @@ func main() {
 		os.Exit(exitSuccess)
 	}
 
+	// parse config
+	ConfigInit(configPath)
+
 	// listen for other module to connect
 	go listenForConnect()
 
