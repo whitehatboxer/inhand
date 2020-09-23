@@ -1,11 +1,30 @@
 package main
 
 import (
-	"fmt"
+	"io/ioutil"
+
 	"gopkg.in/yaml.v2"
-	"io/util"
 )
 
-func main() {
-	fmt.Println("vim-go")
+type MainConfig struct {
+	Host string `yaml:"host"`
+	Port int    `yaml:"port"`
+}
+
+type Config struct {
+	MainConfig `yaml:"main"`
+}
+
+func ConfigInit(configPath string, conf *Config) error {
+	content, readErr := ioutil.ReadFile(configPath)
+	if readErr != nil {
+		return readErr
+	}
+
+	unmarshalErr := yaml.UnmarshalStrict(content, conf)
+	if unmarshalErr != nil {
+		return unmarshalErr
+	}
+
+	return nil
 }
